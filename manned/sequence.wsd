@@ -1,0 +1,34 @@
+@startuml
+
+actor "Main Application\n(Python Script)" as Main
+entity "CAN Reading Thread" as CANThread
+entity "Database Thread" as DBThread
+entity "Server Thread" as ServerThread
+entity "CAN Interface" as CANInterface
+control "UI Queue" as UIQueue
+control "Database Queue" as DBQueue
+database "SQLite Database" as SQLiteDB
+entity "User Interface" as UI
+entity "Server Functions" as ServerFunctions
+entity "Latest Data Object" as LatestData
+
+Main -> CANThread : Starts Thread
+Main -> DBThread : Starts Thread
+Main -> ServerThread : Starts Thread
+
+CANThread -> CANInterface : Read CAN SDO Messages
+CANInterface -> CANThread : Format CAN SDO Message
+
+CANThread -> UIQueue : Send Formatted Data
+CANThread -> DBQueue : Send Formatted Data
+CANThread -> LatestData : Update Object
+
+UIQueue -> UI : Display Data
+
+DBQueue -> DBThread
+DBThread -> SQLiteDB : Store Data
+
+LatestData -> ServerThread
+ServerThread -> ServerFunctions : Put Data
+
+@enduml

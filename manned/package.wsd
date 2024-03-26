@@ -1,0 +1,38 @@
+@startuml
+
+package "Main" {
+    [CANApplication]    
+}
+
+package "External Libraries" {
+    [tkinter]
+    [threading]
+    [queue]
+    [canlib]
+    [sqlite3]
+    [time]
+    [signal]
+    [canopen]
+    [logging]
+    [requests]
+}
+
+package "Custom Modules" {
+    [New_UI]  
+    [Frames_database]  
+}
+
+[CANApplication] -- [tkinter] : uses >
+[CANApplication] -- [threading] : uses >
+[CANApplication] -- [queue] : uses >
+[CANApplication] -- [canlib] : uses >
+[CANApplication] -- [Frames_database] : uses >
+[CANApplication] -- [sqlite3] : uses >
+[CANApplication] -- [time] : uses >
+[CANApplication] -- [signal] : uses >
+[CANApplication] -- [canopen] : uses >
+[CANApplication] -- [logging] : uses >
+[CANApplication] -- [requests] : uses >
+[CANApplication] -- [New_UI] : uses >
+
+@enduml
