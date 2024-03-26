@@ -1,0 +1,75 @@
+@startuml
+
+' Main Application
+package "Main Application (Python Script)" {
+    [Main Script]
+}
+
+' Threading
+node "Thread 1" {
+    [CAN Reading Thread]
+    ' [Server Thread]
+}
+
+node "Thread 2" {
+    [Database Thread]
+}
+
+node "Thread 3" {
+    [Server Thread]
+}
+
+node "Server Functions" {
+    [Put Data]
+}
+' CAN Interface
+node "CAN Interface" {
+    [Format CAN SDO Message]
+    [Read CAN SDO Messages]
+}
+
+node "User Interface" {
+    [Display Data]
+}
+' Queue Mechanism
+queue "Queue Mechanism" {
+    [Database Queue]
+    [UI Queue]
+    [Latest Data Object]
+    
+}
+
+' Database Operations
+database "Database Operations" {
+    [SQLite Database]
+    [Database Functions]
+    [Frames Database Functions]
+}
+
+
+' Connections
+
+[CAN Reading Thread] --> [Read CAN SDO Messages] : Operates in thread
+
+[Read CAN SDO Messages] --> [Format CAN SDO Message]
+
+[Format CAN SDO Message] --> [Database Queue]
+[Format CAN SDO Message] --> [UI Queue]
+[Format CAN SDO Message] --> [Latest Data Object] 
+
+
+[Main Script] --> [CAN Reading Thread] : Starts Thread
+[Main Script] --> [Database Thread] : Starts Thread
+[Main Script] -> [Server Thread] : Starts Thread
+
+[UI Queue] --> [Display Data]
+
+[Database Functions] --> [SQLite Database] : Accesses DB
+[Database Queue] --> [Database Thread]
+[Database Thread] --> [Database Functions] : Operates in thread
+
+[Latest Data Object] --> [Server Thread] : Operates in thread
+[Server Thread] --> [Put Data]
+
+
+@enduml
