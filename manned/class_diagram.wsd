@@ -1,0 +1,33 @@
+@startuml
+
+class MotorController {
+    - throttlePercentage : double
+    - realSpeed : double
+    - motorBusVoltage : double
+    - torque : double
+    + setParameters(value: double) : void
+    + outputSensorData() : SensorData
+}
+
+class DataCollectionUnit {
+    + readCANData() : CANData
+    + readCompass() : CompassData
+    + readIMU() : IMUData
+    + saveDataToDb(data : SensorData) : void
+    + sendAllData() : void
+}
+
+class PilotUI {
+    + displayData(data : SensorData) : void
+}
+
+class ShoreUI {
+    + accessRemoteData() : RemoteData
+    + displayData(data : SensorData) : Report
+}
+
+MotorController *-- "1" DataCollectionUnit
+PilotUI .up.|> DataCollectionUnit : uses
+ShoreUI .up.|> DataCollectionUnit : uses
+
+@enduml
