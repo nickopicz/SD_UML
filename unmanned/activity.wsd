@@ -1,0 +1,29 @@
+@startuml
+start
+
+' :Calculate Trajectory and Distance;
+
+repeat
+
+    if (Boat in buffer Zone?) then (yes)
+        :continue forward;
+    else (no)
+        :adjust to be in buffer zone;
+
+    endif
+
+
+
+    if (Distance < 5m ?) then (yes)
+        :calculate turn angle and thrust vals;
+
+    else (no)
+        :continue forward;
+    endif
+
+
+repeat while (completed lap? ) is (no)
+->yes;
+
+stop
+@enduml

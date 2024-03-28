@@ -1,0 +1,61 @@
+
+@startuml
+
+class MagneticElectronicCompass {
+    getCompassData() : CompassData
+}
+
+class InertialMeasurementUnit {
+    getAccelerometerData() : AccelerometerData
+    getGyroscopeData() : GyroscopeData
+}
+
+class Arduino {
+    readSensorData() : SensorData
+    processInternalSensors() : void
+    gatherDynamicsData() : DynamicsData
+}
+
+class RaspberryPi {
+    retrieveDataFromArduinoSerial(data: SensorData)
+    putData(data : SensorData) : void
+}
+
+class HttpsServer {
+    hostServer() : void
+    putData(data: DataObject)
+    getData() : DataObject
+}
+
+class ShoreCrew {
+    getDataFromServer() : DataObject
+    displayData() : void
+}
+
+class ESC {
+    motorTemperature : double
+    current : double
+    voltage : double
+    power : double
+    measureMotorTemp() : double
+    measureCurrent() : double
+    measureVoltage() : double
+    measurePower() : double
+}
+
+class SensorModule {
+    collectCompassData() : CompassData
+    collectInertia() : InertiaData
+    collectAngleOfTilt() : TiltData
+}
+
+ShoreCrew --> HttpsServer
+HttpsServer --> RaspberryPi
+RaspberryPi --> Arduino
+
+Arduino --> SensorModule
+Arduino --> ESC
+Arduino --> InertialMeasurementUnit
+Arduino --> MagneticElectronicCompass
+
+@enduml

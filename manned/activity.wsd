@@ -1,0 +1,17 @@
+@startuml 
+start
+
+repeat
+
+    :read CAN/Sensor Data;
+
+    :update on-board display;
+
+    :Post sensor data to server;
+
+repeat while (Race complete?) is (no)
+->yes;
+    
+
+stop
+@enduml

@@ -1,0 +1,58 @@
+@startuml
+
+package Utils {
+    class datetime
+    class sqlite3
+    class time
+    class struct
+    class os
+    class queue
+    class threading
+    class signal
+}
+
+package FramesDatabase {
+    class Frames_database {
+        Frames_database()
+    }
+    class database_functions
+    class send_to_shore
+}
+
+package Main {
+    class store_frames_to_database
+    class create_table_for_pdo
+    class store_to_db
+    class get_next_trial_number
+    class create_tables
+    class can_queue
+    class running
+    class value_range_map
+    class actual_values
+    class pdo_map
+    class decode_data
+    class format_can_message
+    class is_device_connected
+    class read_can_messages
+    class signal_handler
+    class database_thread_function
+}
+
+package Arduino {
+    class Servo_h
+    class driveESC
+    class turnServo
+    class driveRcPin
+    class driveEscPin
+    class turnServoPin
+    class driveRcPulse
+    class setup
+    class loop
+    class motor_test_10
+}
+Utils <-- Main
+Main --> FramesDatabase
+Arduino <-- Main
+
+
+@enduml
