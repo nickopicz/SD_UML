@@ -1,0 +1,63 @@
+@startuml
+
+package "Boat System" {
+  [Batteries]
+  [Main Electrical Switch]
+  [48V-12V DC-DC Converter]
+  
+package "Dashboard" {
+  [Cooling Switch]
+  [Bilge Pump Switch]
+  [Steering Wheel]
+  [Key]
+  [Throttle]
+  [Safety Cutoff Switch]
+}
+
+package "Outboard Assembly" {
+  [Motor Controller]
+  [Motor]
+}
+[Cooling System]
+[Bilge Pump]
+[RaspberryPi]
+
+package "Arduino"{
+[IMU Sensor]
+[Electronic Compass]
+}
+[LTE Module]
+
+}
+
+
+
+'Batteries connections
+[Batteries] -down-> [Main Electrical Switch]
+
+'Main Electrical Switch connections
+[Main Electrical Switch] -right-> [48V-12V DC-DC Converter]
+[Main Electrical Switch] -down-> [Outboard Assembly]
+
+'Dashboard connections
+[Cooling Switch] -down-> [Cooling System]
+[Bilge Pump Switch] -down-> [Bilge Pump]
+[Steering Wheel] -down-> [Outboard Assembly]
+[Key] -down-> [Outboard Assembly]
+[Throttle] -down-> [Outboard Assembly]
+[Safety Cutoff Switch] -down-> [Outboard Assembly]
+
+'Outboard Assembly connections
+[Motor Controller] <-down-> [Motor]
+[Motor Controller] -down-> [RaspberryPi]
+[RaspberryPi] <-down- [Arduino]
+[RaspberryPi] -right-> [LTE Module]
+[LTE Module] -down-> [Shore Computer]
+
+
+'Misc connections
+[48V-12V DC-DC Converter] --> [Bilge Pump Switch]
+[48V-12V DC-DC Converter] --> [Cooling Switch]
+[Shore Computer] -down-> [Live Sensor Feed]
+
+@enduml
